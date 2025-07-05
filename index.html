@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>PGA Junior Tour Leaderboard</title>
+
+  <script>
+    // === Variables to quickly change Nathan Switzer's scores ===
+    const nathanToPar = "-3"; // Change this value as needed, e.g. "-2", "+1", "0", "even"
+    const nathanThru = "5";   // Change this value as needed, e.g. "4", "F", "5"
+  </script>
+
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -78,7 +85,7 @@
 <body>
 
 <header>
-  <img src="https://upload.wikimedia.org/wikipedia/en/5/5f/PGA_of_America_logo.svg" alt="PGA Logo">
+  <img src="https://upload.wikimedia.org/wikipedia/en/5/5f/PGA_of_America_logo.svg" alt="PGA Logo" />
   <h1>PGA Middle Atlantic Section Junior Tour</h1>
 </header>
 
@@ -111,6 +118,37 @@
     </tbody>
   </table>
 </section>
+
+<script>
+  function updateNathanSwitzer() {
+    const rows = document.querySelectorAll("tbody tr");
+    rows.forEach(row => {
+      const playerCell = row.querySelector("td:nth-child(2)");
+      if (playerCell && playerCell.textContent.trim() === "Nathan Switzer") {
+        const toParCell = row.querySelector("td:nth-child(3)");
+        const thruCell = row.querySelector("td:nth-child(4)");
+
+        // Update To Par text and class
+        toParCell.textContent = nathanToPar;
+
+        toParCell.classList.remove("under", "over", "even");
+        if (nathanToPar.startsWith("-")) {
+          toParCell.classList.add("under");
+        } else if (nathanToPar.startsWith("+")) {
+          toParCell.classList.add("over");
+        } else if (nathanToPar === "0" || nathanToPar.toLowerCase() === "even") {
+          toParCell.classList.add("even");
+        }
+
+        // Update Thru text
+        thruCell.textContent = nathanThru;
+      }
+    });
+  }
+
+  // Run update when page loads
+  window.onload = updateNathanSwitzer;
+</script>
 
 </body>
 </html>
